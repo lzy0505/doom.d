@@ -90,3 +90,7 @@
         :n "C-;" #'proof-undo-last-successful-command
         :n "C-," #'proof-goto-point)))
 
+
+;;C mode
+
+(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
