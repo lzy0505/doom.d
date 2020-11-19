@@ -94,3 +94,8 @@
 ;;C mode
 
 (setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
+
+
+;;sync PATH
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
