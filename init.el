@@ -79,7 +79,7 @@
        :checkers
        ;;syntax              ; tasing you for every semicolon you forget
        spell             ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
@@ -92,7 +92,7 @@
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
        lsp
-       ;;macos             ; MacOS-specific commands
+       macos             ; MacOS-specific commands
        ;;magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
