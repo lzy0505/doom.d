@@ -94,3 +94,13 @@
 ;;C mode
 
 (setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
+
+
+;;tab
+;;
+;;
+
+(setq centaur-tabs-set-icons nil
+        centaur-tabs-height 28
+        centaur-tabs-set-bar 'under
+        )
