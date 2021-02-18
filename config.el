@@ -97,10 +97,10 @@
 
 
 ;;tab
-;;
-;;
-
 (setq centaur-tabs-set-icons nil
         centaur-tabs-height 28
         centaur-tabs-set-bar 'under
         )
+;;sync PATH
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
