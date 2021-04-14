@@ -53,8 +53,9 @@
 ;; you can also try 'gd' (or 'c-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(toggle-frame-maximized)
-
+;; (setq frame-resize-pixelwise t)
+;; (toggle-frame-maximized)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (with-eval-after-load 'treemacs
   (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
@@ -80,8 +81,8 @@
 ;;Coq mode
 
 ;; disable pretyify symbols
-(with-eval-after-load 'company-coq
-  (add-to-list 'company-coq-disabled-features 'prettify-symbols))
+;; (with-eval-after-load 'company-coq
+  ;; (add-to-list 'company-coq-disabled-features 'prettify-symbols))
 
 ;; keymap
 (map! (:when (featurep! :lang coq)
@@ -93,7 +94,7 @@
 
 ;;C mode
 
-(setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
+;; (setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
 
 
 ;;tab
@@ -101,6 +102,7 @@
         centaur-tabs-height 28
         centaur-tabs-set-bar 'under
         )
+
 ;;sync PATH
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
