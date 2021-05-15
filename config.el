@@ -25,7 +25,21 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-Iosvkem)
+;;(setq doom-theme 'doom-Iosvkem)
+
+(setq current-theme-phase 'light)
+(load-theme 'doom-one-light)
+
+(defun toggle-theme-phase ()
+  "Switch between light and dark themes."
+  (interactive)
+  (if (eq current-theme-phase 'light)
+      (progn
+        (setq current-theme-phase 'dark)
+        (load-theme 'doom-one))
+    (progn
+      (setq current-theme-phase 'light)
+      (load-theme 'doom-one-light))))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -60,6 +74,9 @@
 (with-eval-after-load 'treemacs
   (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
 
+(setq confirm-kill-processes nil)
+
+
 ;; bug fix
 (use-package-hook! evil
   :pre-init
@@ -74,23 +91,20 @@
     (lambda ()
         (add-to-list 'TeX-output-view-style
             '("^pdf$" "."
-              "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o %b")))
+              "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o")))
 )
 
 
 ;;Coq mode
 
-;; disable pretyify symbols
-;; (with-eval-after-load 'company-coq
-  ;; (add-to-list 'company-coq-disabled-features 'prettify-symbols))
-
 ;; keymap
-(map! (:when (featurep! :lang coq)
-       (:map proof-mode-map
-        :n "C-'" #'proof-assert-next-command-interactive
-        :n "C-;" #'proof-undo-last-successful-command
-        :n "C-," #'proof-goto-point)))
+;; (map! (:when (featurep! :lang coq)
+;;        (:map proof-mode-map
+;;         :n "C-'" #'proof-assert-next-command-interactive
+;;         :n "C-;" #'proof-undo-last-successful-command
+;;         :n "C-," #'proof-goto-point)))
 
+(load! "+coq.el")
 
 ;;C mode
 
@@ -98,10 +112,10 @@
 
 
 ;;tab
-(setq centaur-tabs-set-icons nil
-        centaur-tabs-height 28
-        centaur-tabs-set-bar 'under
-        )
+;; (setq centaur-tabs-set-icons nil
+;;         centaur-tabs-height 28
+;;         centaur-tabs-set-bar 'under
+;;         )
 
 ;;sync PATH
 (when (memq window-system '(mac ns x))
