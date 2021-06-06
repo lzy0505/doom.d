@@ -28,7 +28,8 @@
 ;;(setq doom-theme 'doom-Iosvkem)
 
 (setq current-theme-phase 'light)
-(load-theme 'doom-one-light)
+;; (load-theme 'doom-one-light)
+(setq doom-theme 'doom-one-light)
 
 (defun toggle-theme-phase ()
   "Switch between light and dark themes."
