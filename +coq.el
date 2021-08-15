@@ -27,11 +27,11 @@
                                              ;; ("N" . ?ℕ) ("Z" . ?ℤ) ("Q" . ?ℚ) ; Too invasive
 
                                              ;; Core Coq symbols
-                                             ("|-" . ?⊢) ("||" . ?‖) ("/\\" . ?∧) ("\\/" . ?∨)
-                                             ("->" . ?→) ("<-" . ?←) ("<->" . ?↔) ("=>" . ?⇒)
+                                             ;; ("|-" . ?⊢) ("||" . ?‖) ("/\\" . ?∧) ("\\/" . ?∨)
+                                             ;; ("->" . ?→) ("<-" . ?←) ("<->" . ?↔) ("=>" . ?⇒)
                                              ("<=" . ?≤) (">=" . ?≥) ("<>" . ?≠)
                                              ;; ("True" . ?⊤) ("False" . ?⊥)
-                                             ("fun" . ?λ) ("forall" . ?∀) ("exists" . ?∃)
+                                             ("fun" . ?λ) ("forall" . ?∀) ;; ("exists" . ?∃)
                                              ;; ("Prop" . ?ℙ)
                                              ;; ("nat" . ?ℕ) ("Prop" . ?ℙ) ("Real" . ?ℝ) ("bool" . ?𝔹)
 
@@ -241,7 +241,11 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
   )
 
 (add-hook! coq-mode
-  (setq proof-three-window-mode-policy 'hybrid)
+  (setq proof-auto-raise-buffers nil)
+  (setq proof-delete-empty-windows nil)
+  (setq proof-three-window-enable t)
+  ;; (setq proof-multiple-frames-enable t)
+  ;; (setq proof-three-window-mode-policy 'hybrid)
   ;;(setq undo-tree-enable-undo-in-region nil)
 
   (let ((coqbin (getenv "COQBIN")))
@@ -251,7 +255,7 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
   (setq coq-prefer-top-of-conclusion t)
   (setq proof-electric-terminator-enable nil)
   (setq coq-double-hit-enable nil)
-  ;;(setq company-coq-live-on-the-edge t)
+  ;; (setq company-coq-live-on-the-edge t)
 
   (setq company-coq-disabled-features
         '(hello

@@ -19,7 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Fira Code" :size 16))
+(setq doom-font (font-spec :family "Fira Code" :size 18))
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -29,7 +29,7 @@
 
 (setq current-theme-phase 'light)
 ;; (load-theme 'doom-one-light)
-(setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-solarized-light)
 
 (defun toggle-theme-phase ()
   "Switch between light and dark themes."
@@ -37,10 +37,10 @@
   (if (eq current-theme-phase 'light)
       (progn
         (setq current-theme-phase 'dark)
-        (load-theme 'doom-one))
+        (load-theme 'doom-solarized-dark-high-contrast))
     (progn
       (setq current-theme-phase 'light)
-      (load-theme 'doom-one-light))))
+      (load-theme 'doom-solarized-light))))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -76,7 +76,7 @@
   (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
 
 (setq confirm-kill-processes nil)
-
+(setq auto-save-default t)
 
 ;; bug fix
 (use-package-hook! evil
@@ -84,10 +84,8 @@
   (setq evil-want-abbrev-expand-on-insert-exit nil)
   t)
 
-
 ;;Latex mode
 (setq +latex-viewers '(skim))
-
 (add-hook! 'TeX-mode-hook
     (lambda ()
         (add-to-list 'TeX-output-view-style
@@ -97,20 +95,10 @@
 
 
 ;;Coq mode
-
-;; keymap
-;; (map! (:when (featurep! :lang coq)
-;;        (:map proof-mode-map
-;;         :n "C-'" #'proof-assert-next-command-interactive
-;;         :n "C-;" #'proof-undo-last-successful-command
-;;         :n "C-," #'proof-goto-point)))
-
 (load! "+coq.el")
 
 ;;C mode
-
 ;; (setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
-
 
 ;;tab
 ;; (setq centaur-tabs-set-icons nil
@@ -121,3 +109,11 @@
 ;;sync PATH
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+
+;;ocaml
+;; (add-hook! 'tuareg-mode-hook #'merlin-mode)
+;; (add-hook! 'caml-mode-hook #'merlin-mode)
+;; Uncomment these lines if you want to enable integration with the corresponding packages
+;; (require 'merlin-iedit)       ; iedit.el editing of occurrences
+;; (require 'merlin-company)     ; company.el completion
+;; (require 'merlin-ac)          ; auto-complete.el completion
