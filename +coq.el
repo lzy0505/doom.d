@@ -41,7 +41,8 @@
                                              ("==>" . ?⟹) ("<==" . ?⟸) ("~~>" . ?⟿) ("<~~" . ?⬳)))
 
   ;; auto-indentation in Coq isn't good enough to use electric indentation
-  (electric-indent-mode -1))
+  ;; (electric-indent-mode -1)
+  )
 
 (when (featurep! :config default +smartparens)
   (after! smartparens
@@ -79,7 +80,8 @@
       :desc "About"                      "b" #'coq-About
       :desc "Locate Constant"            "l" #'coq-LocateConstant
       :desc "Locate Notation"            "n" #'coq-LocateNotation
-      :desc "Search"                     "s" #'coq-SearchConstant
+      :desc "Search"                     "s" #'coq-Search
+      :desc "Search Pattern"             "S" #'coq-SearchIsos
 
       :prefix ("ai" . "Query Coq with implicits")
       :desc "Check with implicits"       "c" #'coq-Check-show-implicits
@@ -255,7 +257,7 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
   (setq coq-prefer-top-of-conclusion t)
   (setq proof-electric-terminator-enable nil)
   (setq coq-double-hit-enable nil)
-  ;; (setq company-coq-live-on-the-edge t)
+  (setq company-coq-live-on-the-edge t)
 
   (setq company-coq-disabled-features
         '(hello
@@ -267,6 +269,18 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
           obsolete-settings))
 
   (setq require-final-newline t)
+
+  (setq coq-smie-user-tokens
+    '(("∗" . "*")
+      ("-∗" . "->")
+      ("∗-∗" . "<->")
+      ("==∗" . "->")
+      ("⊢" . "->")
+      ("⊣⊢" . "<->")
+      ("⋅" . "*")
+      (":>" . ":=")
+      ("by" . "now")
+      ("forall" . "now")))
 
   (iris-input-config)
   )

@@ -79,10 +79,10 @@
 (setq auto-save-default t)
 
 ;; bug fix
-(use-package-hook! evil
-  :pre-init
-  (setq evil-want-abbrev-expand-on-insert-exit nil)
-  t)
+;; (use-package-hook! evil
+;;   :pre-init
+;;   (setq evil-want-abbrev-expand-on-insert-exit nil)
+;;   t)
 
 ;;Latex mode
 (setq +latex-viewers '(skim))
