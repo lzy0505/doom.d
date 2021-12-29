@@ -6,14 +6,12 @@
  '(TeX-command-extra-options "-shell-escape")
  '(ansi-color-names-vector
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])
- '(company-coq-disabled-features '(hello prettify-symbols alerts spinner company-defaults))
  '(coq-compile-auto-save 'save-coq)
  '(coq-diffs 'on)
  '(custom-safe-themes
-   '("f6665ce2f7f56c5ed5d91ed5e7f6acb66ce44d0ef4acfaa3a42c7cfe9e9a9013" "f4876796ef5ee9c82b125a096a590c9891cec31320569fc6ff602ff99ed73dca" default))
+   '("4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b" "f6665ce2f7f56c5ed5d91ed5e7f6acb66ce44d0ef4acfaa3a42c7cfe9e9a9013" "f4876796ef5ee9c82b125a096a590c9891cec31320569fc6ff602ff99ed73dca" default))
  '(exwm-floating-border-color "#E1DBCD")
  '(fci-rule-color "#D6D6D6")
- '(fstar-executable "/Users/au640903/bin/FStar/bin/fstar.exe")
  '(highlight-tail-colors
    ((("#f1eccc" "#f1eccc" "green")
      . 0)
@@ -23,7 +21,6 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#FFFBF0" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#FFFBF0" "#E1DBCD"))
  '(objed-cursor-color "#dc322f")
- '(package-selected-packages '(exec-path-from-shell))
  '(pdf-view-midnight-colors (cons "#556b72" "#FDF6E3"))
  '(rustic-ansi-faces
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])

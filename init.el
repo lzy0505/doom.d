@@ -37,7 +37,7 @@
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
-       ophints           ; highlight the region an operation acts on
+       ;;ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;pretty-code       ; ligatures or substitute text with pretty symbols
        ;; tabs              ; an tab bar for Emacs
@@ -139,7 +139,7 @@
        ;;factor
        ;;ledger            ; an accounting system in Emacs
        ;;lua               ; one-based indices? one-based indices
-       markdown          ; writing docs for people to ignore
+       ;;markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ocaml             ; an objective camel
@@ -171,7 +171,7 @@
        ;;(wanderlust +gmail)
 
        :app
-       calendar
+       ;;calendar
        ;;irc               ; how neckbeards socialize
        everywhere        ; *leave* Emacs!? You must be joking
        ;;(rss +org)        ; emacs as an RSS reader
