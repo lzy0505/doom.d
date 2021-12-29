@@ -19,17 +19,22 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Fira Code" :size 18))
+;; (setq doom-font (font-spec :family "Fira Code" :size 18))
      ;; doom-variable-pitch-font (font-spec :family "sans" :size 18))
+(setq doom-font (font-spec :family "Victor Mono" :size 16
+                           :slant 'normal :weight 'normal))
+(setq doom-big-font (font-spec :family "Victor Mono" :size 20
+                               :slant 'normal :weight 'normal))
+
+;; increase font by small increments
+(setq doom-font-increment 1)
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-Iosvkem)
-
-(setq current-theme-phase 'light)
-;; (load-theme 'doom-one-light)
-(setq doom-theme 'doom-solarized-light)
+(setq current-theme-phase 'dark)
+(set doom-theme 'doom-solarized-dark-high-contrast)
 
 (defun toggle-theme-phase ()
   "Switch between light and dark themes."
@@ -49,6 +54,20 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
+
+(setq proof-prog-name-guess nil)
+(setq which-key-idle-delay 0.7)
+(setq projectile-indexing-method 'hybrid)
+(setq company-coq-disabled-features '(hello prettify-symbols alerts spinner company-defaults))
+(setq dtrt-indent-max-lines 800)
+(setq confirm-kill-processes nil)
+(setq auto-save-default t)
+;; tab indents anywhere in the line (TODO: probably want this only in only
+;; programming language major modes, especially Coq but also any language with
+;; reliable auto-indentation)
+(setq tab-always-indent t)
+
+(server-start)
 
 
 ;; Here are some additional functions/macros that could help you configure doom:
@@ -70,19 +89,20 @@
 
 ;; (setq frame-resize-pixelwise t)
 ;; (toggle-frame-maximized)
+;;
+
+;; GUI frame adjustments
+(setq frame-title-format
+      '(""
+        "%b"
+        (:eval
+         (let ((project-name (projectile-project-name)))
+           (unless (string= "-" project-name)
+             (format " in [%s]" project-name))))
+        " - Doom Emacs"))
+(menu-bar-mode)
+
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-
-(with-eval-after-load 'treemacs
-  (add-to-list 'treemacs-pre-file-insert-predicates #'treemacs-is-file-git-ignored?))
-
-(setq confirm-kill-processes nil)
-(setq auto-save-default t)
-
-;; bug fix
-;; (use-package-hook! evil
-;;   :pre-init
-;;   (setq evil-want-abbrev-expand-on-insert-exit nil)
-;;   t)
 
 ;;Latex mode
 (setq +latex-viewers '(skim))
@@ -91,11 +111,24 @@
         (add-to-list 'TeX-output-view-style
             '("^pdf$" "."
               "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o")))
-)
+    )
 
 
-;;Coq mode
+
+;; FIXES
+;;
+;; the regular smie-config-guess takes forever in Coq mode due to some advice
+;; added by Doom; replace it with a constant
+(defun my-smie-config-guess ()
+  (if (equal major-mode 'coq-mode) 2 nil))
+(advice-add 'smie-config-guess
+            :before-until #'my-smie-config-guess)
+
+
+;; load patches
+
 (load! "+coq.el")
+(load! "+bindings.el")
 
 ;;C mode
 ;; (setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
@@ -107,7 +140,7 @@
 ;;         )
 
 ;;sync PATH
-;;(when (memq window-system '(mac ns x))
+;; (when (memq window-system '(mac ns x))
 ;;  (exec-path-from-shell-initialize))
 
 ;;ocaml

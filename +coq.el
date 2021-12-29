@@ -6,14 +6,14 @@
   (setq proof-splash-seen t)
 
   (evil-define-text-object evil-a-lift (count &optional beg end type)
-    "Select a lifted proposition."
-    :extend-selection nil
-    (evil-select-paren ?⌜ ?⌝ beg end type count t))
+   "Select a lifted proposition."
+   :extend-selection nil
+   (evil-select-paren ?⌜ ?⌝ beg end type count t))
 
-  (evil-define-text-object evil-inner-lift (count &optional beg end type)
-    "Select inner lifted proposition."
-    :extend-selection nil
-    (evil-select-paren ?⌜ ?⌝ beg end type count))
+ (evil-define-text-object evil-inner-lift (count &optional beg end type)
+   "Select inner lifted proposition."
+   :extend-selection nil
+   (evil-select-paren ?⌜ ?⌝ beg end type count))
 
   (define-key evil-inner-text-objects-map "l" 'evil-inner-lift)
   (define-key evil-outer-text-objects-map "l" 'evil-a-lift)
@@ -41,19 +41,19 @@
                                              ("==>" . ?⟹) ("<==" . ?⟸) ("~~>" . ?⟿) ("<~~" . ?⬳)))
 
   ;; auto-indentation in Coq isn't good enough to use electric indentation
-  ;; (electric-indent-mode -1)
+  (electric-indent-mode -1)
   )
 
-(when (featurep! :config default +smartparens)
-  (after! smartparens
-    (sp-with-modes '(coq-mode)
-      ;; Disable ` because it is used in implicit generalization
-      (sp-local-pair "`" nil :actions nil)
-      (sp-local-pair "(*" "*)" :actions nil)
-      (sp-local-pair "(*" "*"
-                     :actions '(insert)
-                     :post-handlers '(("| " "SPC") ("|\n[i]*)[d-2]" "RET")))
-      )))
+ (when (featurep! :config default +smartparens)
+   (after! smartparens
+     (sp-with-modes '(coq-mode)
+       ;; Disable ` because it is used in implicit generalization
+       (sp-local-pair "`" nil :actions nil)
+       (sp-local-pair "(*" "*)" :actions nil)
+       (sp-local-pair "(*" "*"
+                      :actions '(insert)
+                      :post-handlers '(("| " "SPC") ("|\n[i]*)[d-2]" "RET")))
+       )))
 
 (map! :map coq-mode-map
       :ni "<f3>" #'proof-assert-next-command-interactive
@@ -243,11 +243,11 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
   )
 
 (add-hook! coq-mode
-  (setq proof-auto-raise-buffers nil)
-  (setq proof-delete-empty-windows nil)
-  (setq proof-three-window-enable t)
+  ;; (setq proof-auto-raise-buffers nil)
+  ;; (setq proof-delete-empty-windows t)
+  ;; (setq proof-three-window-enable t)
   ;; (setq proof-multiple-frames-enable t)
-  ;; (setq proof-three-window-mode-policy 'hybrid)
+  (setq proof-three-window-mode-policy 'hybrid)
   ;;(setq undo-tree-enable-undo-in-region nil)
 
   (let ((coqbin (getenv "COQBIN")))
@@ -285,16 +285,16 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
   (iris-input-config)
   )
 
-(with-eval-after-load 'treemacs
+ (with-eval-after-load 'treemacs
 
-  (defun treemacs-ignore-coq (filename absolute-path)
-    (or (string-suffix-p ".vo" filename)
-        (string-suffix-p ".vos" filename)
-        (string-suffix-p ".vok" filename)
-        (string-suffix-p ".aux" filename)
-        (string-suffix-p ".glob" filename)))
+   (defun treemacs-ignore-coq (filename absolute-path)
+     (or (string-suffix-p ".vo" filename)
+         (string-suffix-p ".vos" filename)
+         (string-suffix-p ".vok" filename)
+         (string-suffix-p ".aux" filename)
+         (string-suffix-p ".glob" filename)))
 
-  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-coq))
+   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-coq))
 
 
 ;; fix company-coq loading, from https://github.com/hlissner/doom-emacs/pull/2857

@@ -17,6 +17,7 @@
      . 0)
     (("#e7eddb" "#e7eddb" "brightcyan")
      . 20)))
+ ;; '(package-selected-packages '(exec-path-from-shell))
  '(jdee-db-active-breakpoint-face-colors (cons "#FFFBF0" "#268bd2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#FFFBF0" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#FFFBF0" "#E1DBCD"))
