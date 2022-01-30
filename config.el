@@ -69,7 +69,6 @@
 
 (server-start)
 
-
 ;; Here are some additional functions/macros that could help you configure doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -89,7 +88,6 @@
 
 ;; (setq frame-resize-pixelwise t)
 ;; (toggle-frame-maximized)
-;;
 
 ;; GUI frame adjustments
 (setq frame-title-format
@@ -111,9 +109,8 @@
         (add-to-list 'TeX-output-view-style
             '("^pdf$" "."
               "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o")))
+
     )
-
-
 
 ;; FIXES
 ;;
@@ -124,24 +121,11 @@
 (advice-add 'smie-config-guess
             :before-until #'my-smie-config-guess)
 
-
 ;; load patches
 
 (load! "+coq.el")
 (load! "+bindings.el")
-
-;;C mode
-;; (setq ccls-executable "/usr/local/Cellar/ccls/0.20190823.6/bin/ccls")
-
-;;tab
-;; (setq centaur-tabs-set-icons nil
-;;         centaur-tabs-height 28
-;;         centaur-tabs-set-bar 'under
-;;         )
-
-;;sync PATH
-;; (when (memq window-system '(mac ns x))
-;;  (exec-path-from-shell-initialize))
+(load! "+latex.el")
 
 ;;ocaml
 ;; (add-hook! 'tuareg-mode-hook #'merlin-mode)
