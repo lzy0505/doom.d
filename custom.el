@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-command-extra-options "-shell-escape")
+ '(TeX-fold-auto t)
  '(ansi-color-names-vector
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])
  '(coq-compile-auto-save 'save-coq)
@@ -17,7 +18,6 @@
      . 0)
     (("#e7eddb" "#e7eddb" "brightcyan")
      . 20)))
- ;; '(package-selected-packages '(exec-path-from-shell))
  '(jdee-db-active-breakpoint-face-colors (cons "#FFFBF0" "#268bd2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#FFFBF0" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#FFFBF0" "#E1DBCD"))
@@ -47,7 +47,8 @@
     (cons 340 "#D6D6D6")
     (cons 360 "#D6D6D6")))
  '(vc-annotate-very-old-color nil)
- '(vterm-shell "/usr/local/bin/fish"))
+ '(vterm-shell "/usr/local/bin/fish")
+ '(warning-suppress-types '((before-save-hook))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

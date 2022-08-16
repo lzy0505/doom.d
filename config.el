@@ -67,8 +67,6 @@
 ;; reliable auto-indentation)
 (setq tab-always-indent t)
 
-(server-start)
-
 ;; Here are some additional functions/macros that could help you configure doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -111,6 +109,15 @@
               "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o")))
 
     )
+;; Auto-raise Emacs on activation
+(defun raise-emacs-on-aqua()
+    (shell-command "osascript -e 'tell application \"Emacs\" to activate' &"))
+(add-hook 'server-switch-hook 'raise-emacs-on-aqua)
+
+
+;;markdown
+(custom-set-variables
+ '(markdown-command "pandoc"))
 
 ;; FIXES
 ;;
