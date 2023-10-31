@@ -4,13 +4,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-command-extra-options "-shell-escape")
- '(TeX-fold-auto t)
  '(ansi-color-names-vector
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])
- '(coq-compile-auto-save 'save-coq)
- '(coq-diffs 'on)
  '(custom-safe-themes
-   '("4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b" "f6665ce2f7f56c5ed5d91ed5e7f6acb66ce44d0ef4acfaa3a42c7cfe9e9a9013" "f4876796ef5ee9c82b125a096a590c9891cec31320569fc6ff602ff99ed73dca" default))
+   '("afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
  '(exwm-floating-border-color "#E1DBCD")
  '(fci-rule-color "#D6D6D6")
  '(highlight-tail-colors
@@ -21,8 +18,8 @@
  '(jdee-db-active-breakpoint-face-colors (cons "#FFFBF0" "#268bd2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#FFFBF0" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#FFFBF0" "#E1DBCD"))
+ '(markdown-command "pandoc")
  '(objed-cursor-color "#dc322f")
- '(pdf-view-midnight-colors (cons "#556b72" "#FDF6E3"))
  '(rustic-ansi-faces
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])
  '(vc-annotate-background "#FDF6E3")
@@ -47,8 +44,7 @@
     (cons 340 "#D6D6D6")
     (cons 360 "#D6D6D6")))
  '(vc-annotate-very-old-color nil)
- '(vterm-shell "/usr/local/bin/fish")
- '(warning-suppress-types '((before-save-hook))))
+ '(vterm-shell "/usr/local/bin/fish"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

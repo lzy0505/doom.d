@@ -1,23 +1,47 @@
 ;;; ~/.doom.d/+coq.el -*- lexical-binding: nil; -*-
 ;;;
 
-(add-hook! coq-mode
-  (setq proof-splash-enable nil)
-  (setq proof-splash-seen t)
+(use-package! proof-general
+  :config
+  ;; (setq proof-auto-raise-buffers nil)
+  ;; (setq proof-delete-empty-windows t)
+  ;; (setq proof-three-window-enable t)
+  ;; (setq proof-multiple-frames-enable t)
+  (setq proof-three-window-mode-policy 'hybrid)
+  ;;(setq undo-tree-enable-undo-in-region nil)
 
-  (evil-define-text-object evil-a-lift (count &optional beg end type)
-   "Select a lifted proposition."
-   :extend-selection nil
-   (evil-select-paren ?⌜ ?⌝ beg end type count t))
+  (let ((coqbin (getenv "COQBIN")))
+    (setq coq-compiler (concat coqbin "coqc"))
+    (setq coq-dependency-analyzer (concat coqbin "coqdep"))
+    (setq coq-prog-name (concat coqbin "dune-coqtop")))
+  (setq coq-prefer-top-of-conclusion t)
+  (setq proof-electric-terminator-enable nil)
+  (setq coq-double-hit-enable nil)
 
- (evil-define-text-object evil-inner-lift (count &optional beg end type)
-   "Select inner lifted proposition."
-   :extend-selection nil
-   (evil-select-paren ?⌜ ?⌝ beg end type count))
+  (setq coq-smie-user-tokens
+   '(("," . ":=")
+	("∗" . "->")
+	("-∗" . "->")
+	("∗-∗" . "->")
+	("==∗" . "->")
+	("=∗" . "->")  ;; Hack to match ={E1,E2}=∗
+	("|==>" . ":=")
+	("⊢" . "->")
+	("⊣⊢" . "->")
+	("↔" . "->")
+	("←" . "<-")
+	("→" . "->")
+	("=" . "->")
+	("==" . "->")
+	("/\\" . "->")
+	("⋅" . "->")
+	(":>" . ":=")
+	("by" . "now")
+	("forall" . "now")
+      ))
+  )
 
-  (define-key evil-inner-text-objects-map "l" 'evil-inner-lift)
-  (define-key evil-outer-text-objects-map "l" 'evil-a-lift)
-
+(after! company-coq
   (setq company-coq-prettify-symbols-alist '(;; Disabled
                                              ;; ("*" . ?×)  ; Inconsistent (‘intros H *’, rewrite in *, etc.)
                                              ;; ("~" . ?¬)  ; Too invasive
@@ -31,7 +55,7 @@
                                              ("->" . ?→) ("<-" . ?←) ("<->" . ?↔) ("=>" . ?⇒)
                                              ("<=" . ?≤) (">=" . ?≥) ("<>" . ?≠)
                                              ;; ("True" . ?⊤) ("False" . ?⊥)
-                                             ("fun" . ?λ) ("forall" . ?∀) ;; ("exists" . ?∃)
+                                             ;; ("fun" . ?λ) ;; ("forall" . ?∀) ("exists" . ?∃)
                                              ;; ("Prop" . ?ℙ)
                                              ;; ("nat" . ?ℕ) ("Prop" . ?ℙ) ("Real" . ?ℝ) ("bool" . ?𝔹)
 
@@ -39,21 +63,52 @@
                                              (">->" . ?↣)
                                              ("-->" . ?⟶) ("<--" . ?⟵) ("<-->" . ?⟷)
                                              ("==>" . ?⟹) ("<==" . ?⟸) ("~~>" . ?⟿) ("<~~" . ?⬳)))
+  (setq company-coq-live-on-the-edge t)
+  (setq company-coq-disabled-features
+        '(hello
+          outline
+          refactorings
+          alerts ;; doesn't work on macOS
+          ;; prettify-symbols ;; causes too many problems with Iris
+          spinner ;; minor modes are hidden anyway
+          obsolete-settings
+          unicode-math-backend ;; use input method instead
+          ))
+  )
+
+(add-hook! coq-mode
+  (setq proof-splash-seen t)
+
+  (evil-define-text-object evil-a-lift (count &optional beg end type)
+   "Select a lifted proposition."
+   :extend-selection nil
+   (evil-select-paren ?⌜ ?⌝ beg end type count t))
+
+  (evil-define-text-object evil-inner-lift (count &optional beg end type)
+   "Select inner lifted proposition."
+   :extend-selection nil
+   (evil-select-paren ?⌜ ?⌝ beg end type count))
+
+  (define-key evil-inner-text-objects-map "l" 'evil-inner-lift)
+  (define-key evil-outer-text-objects-map "l" 'evil-a-lift)
 
   ;; auto-indentation in Coq isn't good enough to use electric indentation
   (electric-indent-mode -1)
+
+  (setq require-final-newline t)
+
   )
 
- (when (featurep! :config default +smartparens)
-   (after! smartparens
-     (sp-with-modes '(coq-mode)
-       ;; Disable ` because it is used in implicit generalization
-       (sp-local-pair "`" nil :actions nil)
-       (sp-local-pair "(*" "*)" :actions nil)
-       (sp-local-pair "(*" "*"
-                      :actions '(insert)
-                      :post-handlers '(("| " "SPC") ("|\n[i]*)[d-2]" "RET")))
-       )))
+(when (modulep! :config default +smartparens)
+  (after! smartparens
+    (sp-with-modes '(coq-mode)
+      ;; Disable ` because it is used in implicit generalization
+      (sp-local-pair "`" nil :actions nil)
+      (sp-local-pair "(*" "*)" :actions nil)
+      (sp-local-pair "(*" "*"
+                     :actions '(insert)
+                     :post-handlers '(("| " "SPC") ("|\n[i]*)[d-2]" "RET")))
+      )))
 
 (map! :map coq-mode-map
       :ni "<f3>" #'proof-assert-next-command-interactive
@@ -90,9 +145,7 @@
       )
 
 (defun iris-input-config ()
-  "Set up math input for Iris.
-
-Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
+  "Set up math input for Iris. Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
 
   ;; Input method for the minibuffer
   (defun my-inherit-input-method ()
@@ -146,14 +199,13 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
    ("\\hookrightarrow" "↪")
    ("\\uparrow"        "↑")
    ("\\upclose"        "↑")
-
-   ;; Perennial
-   ("\\named"           "∷")
+   ("\\named"          "∷")
 
    ("\\mult"   ?⋅)
    ("\\ent"    ?⊢)
    ("\\valid"  ?✓)
    ("\\box"    ?□)
+   ("\\bbox"   ?■)
    ("\\later"  ?▷)
    ("\\pred"   ?φ)
    ("\\post"   ?Φ)
@@ -186,6 +238,7 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
    ("\\gname"  ?γ)
    ("\\incl"   ?≼)
    ("\\latert" ?▶)
+   ("\\now"  ?⋈)
 
    ;; accents (for iLöb)
    ("\\\"o"    ?ö)
@@ -231,62 +284,43 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
    ("\\gets"     ?←)
    ("\\op"       ?⋅)
    ("\\except0"  ?◇)
+   ("\\times"   ?×)
+   ("\\refll"   "⦗")
+   ("\\reflr"   "⦘")
+   ("\\seqc"   "⨾")
    ;; note that this is a elisp vector - quail interprets a string as a list of
    ;; characters that are candidates for translation, while a vector can contain
    ;; strings that are candidates for translation.
    ("\\bient"    ["⊣⊢"])
    ;; common typo due to keyboard config
-   ("\\_ep"    ?∗)
+   ;; ("\\_ep"    ?∗)
    )
+
+)
+
+;; define new math mode
+(iris-input-config)
+
+(add-hook! 'company-coq-mode-hook
   ; use the newly-created math input method
   (set-input-method "math")
+  (toggle-input-method)
   )
 
-(add-hook! coq-mode
-  ;; (setq proof-auto-raise-buffers nil)
-  ;; (setq proof-delete-empty-windows t)
-  ;; (setq proof-three-window-enable t)
-  ;; (setq proof-multiple-frames-enable t)
-  (setq proof-three-window-mode-policy 'hybrid)
-  ;;(setq undo-tree-enable-undo-in-region nil)
+;; adding opam switch mode hook
+(use-package! opam-switch-mode
+  :hook (coq-mode . opam-switch-mode))
 
-  (let ((coqbin (getenv "COQBIN")))
-    (setq coq-compiler (concat coqbin "coqc"))
-    (setq coq-dependency-analyzer (concat coqbin "coqdep"))
-    (setq coq-prog-name (concat coqbin "coqtop")))
-  (setq coq-prefer-top-of-conclusion t)
-  (setq proof-electric-terminator-enable nil)
-  (setq coq-double-hit-enable nil)
-  (setq company-coq-live-on-the-edge t)
-
-  (setq company-coq-disabled-features
-        '(hello
-          outline
-          refactorings
-          alerts ;; doesn't work on macOS
-          prettify-symbols ;; causes too many problems with Iris
-          spinner ;; minor modes are hidden anyway
-          obsolete-settings))
-
-  (setq require-final-newline t)
-
-  (setq coq-smie-user-tokens
-    '(("∗" . "*")
-      ("-∗" . "->")
-      ("∗-∗" . "<->")
-      ("==∗" . "->")
-      ("⊢" . "->")
-      ("⊣⊢" . "<->")
-      ("⋅" . "*")
-      (":>" . ":=")
-      ("by" . "now")
-      ("forall" . "now")))
-
-  (iris-input-config)
-  )
+;; FIXES
+;;
+;; the regular smie-config-guess takes forever in Coq mode due to some advice
+;; added by Doom; replace it with a constant
+(defun my-smie-config-guess ()
+  (if (equal major-mode 'coq-mode) 2 nil))
+(advice-add 'smie-config-guess
+            :before-until #'my-smie-config-guess)
 
  (with-eval-after-load 'treemacs
-
    (defun treemacs-ignore-coq (filename absolute-path)
      (or (string-suffix-p ".vo" filename)
          (string-suffix-p ".vos" filename)
@@ -295,7 +329,6 @@ Based on https://gitlab.mpi-sws.org/iris/iris/blob/master/docs/editor.md"
          (string-suffix-p ".glob" filename)))
 
    (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-coq))
-
 
 ;; fix company-coq loading, from https://github.com/hlissner/doom-emacs/pull/2857
 ;;

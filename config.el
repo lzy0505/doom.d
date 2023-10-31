@@ -9,6 +9,9 @@
 (setq user-full-name "Zongyuan Liu"
       user-mail-address "zy.liu@cs.au.dk")
 
+;; show error traces
+;; (setq debug-on-error t)
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -21,9 +24,9 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "Fira Code" :size 18))
      ;; doom-variable-pitch-font (font-spec :family "sans" :size 18))
-(setq doom-font (font-spec :family "Victor Mono" :size 16
-                           :slant 'normal :weight 'normal))
-(setq doom-big-font (font-spec :family "Victor Mono" :size 20
+(setq doom-font (font-spec :family "Iosevka Fixed SS02" :size 18
+                           :slant 'normal :weight 'normal ))
+(setq doom-big-font (font-spec :family "Iosevka Fixed SS02" :size 22
                                :slant 'normal :weight 'normal))
 
 ;; increase font by small increments
@@ -33,8 +36,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-Iosvkem)
-(setq current-theme-phase 'dark)
-(set doom-theme 'doom-solarized-dark-high-contrast)
+(setq current-theme-phase 'light)
+(setq doom-theme 'doom-one-light)
 
 (defun toggle-theme-phase ()
   "Switch between light and dark themes."
@@ -42,10 +45,14 @@
   (if (eq current-theme-phase 'light)
       (progn
         (setq current-theme-phase 'dark)
-        (load-theme 'doom-solarized-dark-high-contrast))
+        ;; (load-theme 'doom-solarized-dark-high-contrast)
+        (load-theme 'doom-dark+)
+        )
     (progn
       (setq current-theme-phase 'light)
-      (load-theme 'doom-solarized-light))))
+      (load-theme 'doom-one-light)
+      ;; (disable-theme 'doom-solarized-dark-high-contrast)
+      )))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -57,8 +64,6 @@
 
 (setq proof-prog-name-guess nil)
 (setq which-key-idle-delay 0.7)
-(setq projectile-indexing-method 'hybrid)
-(setq company-coq-disabled-features '(hello prettify-symbols alerts spinner company-defaults))
 (setq dtrt-indent-max-lines 800)
 (setq confirm-kill-processes nil)
 (setq auto-save-default t)
@@ -100,44 +105,26 @@
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-;;Latex mode
-(setq +latex-viewers '(skim))
-(add-hook! 'TeX-mode-hook
-    (lambda ()
-        (add-to-list 'TeX-output-view-style
-            '("^pdf$" "."
-              "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o")))
-
-    )
-;; Auto-raise Emacs on activation
-(defun raise-emacs-on-aqua()
-    (shell-command "osascript -e 'tell application \"Emacs\" to activate' &"))
-(add-hook 'server-switch-hook 'raise-emacs-on-aqua)
-
+(setq projectile-enable-caching t)
+(setq projectile-indexing-method 'native)
 
 ;;markdown
 (custom-set-variables
  '(markdown-command "pandoc"))
 
-;; FIXES
-;;
-;; the regular smie-config-guess takes forever in Coq mode due to some advice
-;; added by Doom; replace it with a constant
-(defun my-smie-config-guess ()
-  (if (equal major-mode 'coq-mode) 2 nil))
-(advice-add 'smie-config-guess
-            :before-until #'my-smie-config-guess)
-
 ;; load patches
-
 (load! "+coq.el")
 (load! "+bindings.el")
 (load! "+latex.el")
 
-;;ocaml
-;; (add-hook! 'tuareg-mode-hook #'merlin-mode)
-;; (add-hook! 'caml-mode-hook #'merlin-mode)
+;; ocaml
+(add-hook! 'tuareg-mode-hook #'merlin-mode)
+(add-hook! 'caml-mode-hook #'merlin-mode)
 ;; Uncomment these lines if you want to enable integration with the corresponding packages
 ;; (require 'merlin-iedit)       ; iedit.el editing of occurrences
-;; (require 'merlin-company)     ; company.el completion
+(require 'merlin-company)     ; company.el completion
 ;; (require 'merlin-ac)          ; auto-complete.el completion
+(map! :map merlin-mode-map
+      :localleader
+      :desc "Locate Definition"                "l" #'merlin-locate
+      )
