@@ -56,7 +56,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/1drv/org/")
+;; (setq org-directory "~/1drv/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -71,6 +71,9 @@
 ;; programming language major modes, especially Coq but also any language with
 ;; reliable auto-indentation)
 (setq tab-always-indent t)
+
+;; fish doesn't work well with emacs, so use bash
+(setq shell-file-name (executable-find "bash"))
 
 ;; Here are some additional functions/macros that could help you configure doom:
 ;;
@@ -110,12 +113,17 @@
 
 ;;markdown
 (custom-set-variables
- '(markdown-command "pandoc"))
+ '(markdown-command "pandoc")
+ )
 
 ;; load patches
 (load! "+coq.el")
 (load! "+bindings.el")
 (load! "+latex.el")
+
+(after! eldoc
+  (setq eldoc-echo-area-use-multiline-p 5)
+  )
 
 ;; ocaml
 (add-hook! 'tuareg-mode-hook #'merlin-mode)

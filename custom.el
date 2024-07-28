@@ -6,8 +6,11 @@
  '(TeX-command-extra-options "-shell-escape")
  '(ansi-color-names-vector
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(coq-use-project-file nil)
  '(custom-safe-themes
-   '("afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
+   '("88f7ee5594021c60a4a6a1c275614103de8c1435d6d08cc58882f920e0cec65e" "9f297216c88ca3f47e5f10f8bd884ab24ac5bc9d884f0f23589b0a46a608fe14" "afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" default))
  '(exwm-floating-border-color "#E1DBCD")
  '(fci-rule-color "#D6D6D6")
  '(highlight-tail-colors
@@ -18,10 +21,15 @@
  '(jdee-db-active-breakpoint-face-colors (cons "#FFFBF0" "#268bd2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#FFFBF0" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#FFFBF0" "#E1DBCD"))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(markdown-command "pandoc")
+ '(max-mini-window-height 4)
  '(objed-cursor-color "#dc322f")
+ '(resize-mini-windows t)
  '(rustic-ansi-faces
    ["#FDF6E3" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#556b72"])
+ '(size-indication-mode t)
+ '(tool-bar-mode nil)
  '(vc-annotate-background "#FDF6E3")
  '(vc-annotate-color-map
    (list

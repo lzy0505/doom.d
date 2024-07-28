@@ -285,9 +285,10 @@
    ("\\op"       ?⋅)
    ("\\except0"  ?◇)
    ("\\times"   ?×)
-   ("\\refll"   "⦗")
-   ("\\reflr"   "⦘")
-   ("\\seqc"   "⨾")
+   ("\\rbl"   "⦗")
+   ("\\rbr"   "⦘")
+   ("\\rbb"   ["⦗⦘"])
+   ("\\rseq"   "⨾")
    ;; note that this is a elisp vector - quail interprets a string as a list of
    ;; characters that are candidates for translation, while a vector can contain
    ;; strings that are candidates for translation.

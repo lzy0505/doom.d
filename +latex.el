@@ -18,3 +18,5 @@
 (defun raise-emacs-on-aqua()
     (shell-command "osascript -e 'tell application \"Emacs\" to activate' &"))
 (add-hook 'server-switch-hook 'raise-emacs-on-aqua)
+
+(use-package! texpresso)
