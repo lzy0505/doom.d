@@ -92,8 +92,8 @@
 ;; you can also try 'gd' (or 'c-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; (setq frame-resize-pixelwise t)
-;; (toggle-frame-maximized)
+(setq frame-resize-pixelwise t)
+(toggle-frame-maximized)
 
 ;; GUI frame adjustments
 (setq frame-title-format
@@ -111,10 +111,6 @@
 (setq projectile-enable-caching t)
 (setq projectile-indexing-method 'native)
 
-;;markdown
-(custom-set-variables
- '(markdown-command "pandoc")
- )
 
 ;; load patches
 (load! "+coq.el")
