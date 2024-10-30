@@ -295,6 +295,10 @@
    ("\\bient"    ["⊣⊢"])
    ;; common typo due to keyboard config
    ;; ("\\_ep"    ?∗)
+   ("\\lvl" "ℓ")
+   ("\\uplvl" "ℒ")
+   ("\\tto" ["Τₒ"])
+   ("\\tte" ["Τₑ"])
    )
 
 )

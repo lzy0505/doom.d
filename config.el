@@ -36,8 +36,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-Iosvkem)
-(setq current-theme-phase 'light)
-(setq doom-theme 'doom-one-light)
+(setq current-theme-phase 'dark)
+(setq doom-theme 'doom-dark+)
 
 (defun toggle-theme-phase ()
   "Switch between light and dark themes."
@@ -121,14 +121,14 @@
   (setq eldoc-echo-area-use-multiline-p 5)
   )
 
-;; ocaml
-(add-hook! 'tuareg-mode-hook #'merlin-mode)
-(add-hook! 'caml-mode-hook #'merlin-mode)
-;; Uncomment these lines if you want to enable integration with the corresponding packages
-;; (require 'merlin-iedit)       ; iedit.el editing of occurrences
-(require 'merlin-company)     ; company.el completion
-;; (require 'merlin-ac)          ; auto-complete.el completion
-(map! :map merlin-mode-map
-      :localleader
-      :desc "Locate Definition"                "l" #'merlin-locate
-      )
+;; ;; ocaml
+;; (add-hook! 'tuareg-mode-hook #'merlin-mode)
+;; (add-hook! 'caml-mode-hook #'merlin-mode)
+;; ;; Uncomment these lines if you want to enable integration with the corresponding packages
+;; ;; (require 'merlin-iedit)       ; iedit.el editing of occurrences
+;; (require 'merlin-company)     ; company.el completion
+;; ;; (require 'merlin-ac)          ; auto-complete.el completion
+;; (map! :map merlin-mode-map
+;;       :localleader
+;;       :desc "Locate Definition"                "l" #'merlin-locate
+;;       )
