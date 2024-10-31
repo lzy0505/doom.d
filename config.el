@@ -111,6 +111,20 @@
 (setq projectile-enable-caching t)
 (setq projectile-indexing-method 'native)
 
+;; to switch input method
+(defun evil-toggle-input-method ()
+  "when toggle on input method, switch to evil-insert-state if possible.
+    when toggle off input method, switch to evil-normal-state if current state is evil-insert-state"
+  (interactive)
+  (if (not current-input-method)
+      (if (not (string= evil-state "insert"))
+          (evil-insert-state))
+    (if (string= evil-state "insert")
+        (evil-normal-state)
+      ))
+  (toggle-input-method))
+
+(global-set-key (kbd "C-\\") 'evil-toggle-input-method)
 
 ;; load patches
 (load! "+coq.el")

@@ -96,7 +96,6 @@
   (electric-indent-mode -1)
 
   (setq require-final-newline t)
-
   )
 
 (when (modulep! :config default +smartparens)
@@ -297,8 +296,8 @@
    ;; ("\\_ep"    ?∗)
    ("\\lvl" "ℓ")
    ("\\uplvl" "ℒ")
-   ("\\tto" ["Τₒ"])
-   ("\\tte" ["Τₑ"])
+   ;; ("\\tto" ["Τₒ"])
+   ;; ("\\tte" ["Τₑ"])
    )
 
 )
@@ -320,11 +319,9 @@
   ;; (opam-switch-set-switch (tuareg-opam-current-compiler))
   )
 
-
-(add-hook! 'company-coq-mode-hook
+(add-hook! coq-mode
   ; use the newly-created math input method
   (set-input-method "math")
-  (toggle-input-method)
 )
 
 ;; FIXES
@@ -336,15 +333,16 @@
 (advice-add 'smie-config-guess
             :before-until #'my-smie-config-guess)
 
- (with-eval-after-load 'treemacs
-   (defun treemacs-ignore-coq (filename absolute-path)
-     (or (string-suffix-p ".vo" filename)
-         (string-suffix-p ".vos" filename)
-         (string-suffix-p ".vok" filename)
-         (string-suffix-p ".aux" filename)
-         (string-suffix-p ".glob" filename)))
+;; don't show auxiliary files in treemacs
+(with-eval-after-load 'treemacs
+  (defun treemacs-ignore-coq (filename absolute-path)
+    (or (string-suffix-p ".vo" filename)
+        (string-suffix-p ".vos" filename)
+        (string-suffix-p ".vok" filename)
+        (string-suffix-p ".aux" filename)
+        (string-suffix-p ".glob" filename)))
 
-   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-coq))
+  (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-coq))
 
 ;; fix company-coq loading, from https://github.com/hlissner/doom-emacs/pull/2857
 ;;
