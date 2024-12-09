@@ -130,6 +130,7 @@
 (load! "+coq.el")
 (load! "+bindings.el")
 (load! "+latex.el")
+(load! "+lean.el")
 
 (after! eldoc
   (setq eldoc-echo-area-use-multiline-p 5)

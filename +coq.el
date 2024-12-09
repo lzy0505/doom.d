@@ -188,6 +188,9 @@
    ("\\bottom"         "⊥")
    ("\\vdash"          "⊢")
    ("\\dashv"          "⊣")
+   ;; note that this is a elisp vector - quail interprets a string as a list of
+   ;; characters that are candidates for translation, while a vector can contain
+   ;; strings that are candidates for translation.
    ("\\bient"          ["⊣⊢"])
    ("\\Vdash"          "⊨")
    ("\\infty"          "∞")
@@ -231,8 +234,8 @@
    ("\\env"    ?Δ)
    ("\\state"  ?σ)
    ("\\-"      ?∖)
-   ("\\aa"     ?●)
-   ("\\af"     ?◯)
+   ("\\aauth"     ?●)
+   ("\\afrag"     ?◯)
    ("\\iff"    ?↔)
    ("\\gname"  ?γ)
    ("\\incl"   ?≼)
@@ -288,16 +291,8 @@
    ("\\rbr"   "⦘")
    ("\\rbb"   ["⦗⦘"])
    ("\\rseq"   "⨾")
-   ;; note that this is a elisp vector - quail interprets a string as a list of
-   ;; characters that are candidates for translation, while a vector can contain
-   ;; strings that are candidates for translation.
-   ("\\bient"    ["⊣⊢"])
-   ;; common typo due to keyboard config
-   ;; ("\\_ep"    ?∗)
    ("\\lvl" "ℓ")
-   ("\\uplvl" "ℒ")
-   ;; ("\\tto" ["Τₒ"])
-   ;; ("\\tte" ["Τₑ"])
+   ("\\Lvl" "ℒ")
    )
 
 )
@@ -360,3 +355,18 @@
     (defun +coq--fix-company-coq-hack-h ()
       (add-hook! 'after-change-major-mode-hook :local #'+coq--record-company-backends-h)
       (add-hook! 'after-change-major-mode-hook :append :local #'+coq--replay-company-backends-h))))
+
+;; enable opam-switch-mode
+(use-package! opam-switch-mode
+  :hook (coq-mode . opam-switch-mode)
+  :preface
+  (map! :after coq
+        :localleader
+        :map coq-mode-map
+        "w" #'opam-switch-set-switch)
+  :init
+  (defadvice! +coq--init-opam-switch-mode-maybe-h (fn &rest args)
+    "Activate `opam-switch-mode' if the opam executable exists."
+    :around #'opam-switch-mode
+    (when (executable-find opam-switch-program-name)
+      (apply fn args))))

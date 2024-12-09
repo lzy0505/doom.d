@@ -17,9 +17,14 @@
   :recipe (:host github :repo "let-def/texpresso"
            :files ("emacs/*.el")))
 
-;; (package! company-coq
-;;   :recipe (:host github :repo "lzy0505/company-coq")
-;;   :pin "6bfaf99")
+(package! company-coq
+  :recipe (:host github :repo "lzy0505/company-coq")
+  :pin "004a0cd")
+
+(package! opam-switch-mode :pin "1069e56a662f23ea09d4e05611bdedeb99257012")
+
+(package! lean4-mode
+  :recipe (:host github :repo "leanprover/lean4-mode" :files ("*.el" "data")))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
