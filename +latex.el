@@ -25,3 +25,7 @@
       :desc "Next page"          "]" #'texpresso-next-page
       :desc "Previous page"      "[" #'texpresso-previous-page
       )
+
+;; ;; fix doom emacs issue for emacs version < 30
+;; ;; https://github.com/doomemacs/doomemacs/issues/8191
+;; (setq major-mode-remap-alist major-mode-remap-defaults)
