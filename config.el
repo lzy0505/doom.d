@@ -136,6 +136,8 @@
   (setq eldoc-echo-area-use-multiline-p 5)
   )
 
+(use-package! gptel)
+
 ;; ;; ocaml
 ;; (add-hook! 'tuareg-mode-hook #'merlin-mode)
 ;; (add-hook! 'caml-mode-hook #'merlin-mode)
