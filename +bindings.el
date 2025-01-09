@@ -6,7 +6,7 @@
       ;;   :desc "Kill compilation"         "k"   #'kill-compilation)
 
       (:prefix "p"
-        :desc "Search project with rg"   "/" #'+ivy/rg
+        :desc "Search project with rg"   "/" #'+ivy/project-search
         :desc "Find file in project"     "f" #'projectile-find-file)
 
       (:prefix ("z" . "zoom")

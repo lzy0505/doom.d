@@ -300,20 +300,6 @@
 ;; define new math mode
 (iris-input-config)
 
-(use-package! opam-switch-mode
-  :hook (coq-mode . opam-switch-mode)
-  :init
-  (defadvice! +ocaml--init-opam-switch-mode-maybe-h (fn &rest args)
-    "Activate `opam-switch-mode' if the opam executable exists."
-    :around #'opam-switch-mode
-    (when (executable-find opam-switch-program-name)
-      (apply fn args)))
-  ;; :config
-  ;; ;; Use opam to set environment
-  ;; (setq tuareg-opam-insinuate t)
-  ;; (opam-switch-set-switch (tuareg-opam-current-compiler))
-  )
-
 (add-hook! coq-mode
   ; use the newly-created math input method
   (set-input-method "math")
@@ -370,3 +356,17 @@
     :around #'opam-switch-mode
     (when (executable-find opam-switch-program-name)
       (apply fn args))))
+
+;; (use-package! opam-switch-mode
+;;   :hook (coq-mode . opam-switch-mode)
+;;   :init
+;;   (defadvice! +ocaml--init-opam-switch-mode-maybe-h (fn &rest args)
+;;     "Activate `opam-switch-mode' if the opam executable exists."
+;;     :around #'opam-switch-mode
+;;     (when (executable-find opam-switch-program-name)
+;;       (apply fn args)))
+;;   ;; :config
+;;   ;; ;; Use opam to set environment
+;;   ;; (setq tuareg-opam-insinuate t)
+;;   ;; (opam-switch-set-switch (tuareg-opam-current-compiler))
+;;   )

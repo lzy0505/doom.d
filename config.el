@@ -26,7 +26,7 @@
      ;; doom-variable-pitch-font (font-spec :family "sans" :size 18))
 (setq doom-font (font-spec :family "Iosevka Fixed SS02" :size 18
                            :slant 'normal :weight 'normal ))
-(setq doom-big-font (font-spec :family "Iosevka Fixed SS02" :size 22
+(setq doom-big-font (font-spec :family "Iosevka Fixed SS02" :size 20
                                :slant 'normal :weight 'normal))
 
 ;; increase font by small increments
@@ -45,13 +45,11 @@
   (if (eq current-theme-phase 'light)
       (progn
         (setq current-theme-phase 'dark)
-        ;; (load-theme 'doom-solarized-dark-high-contrast)
         (load-theme 'doom-dark+)
         )
     (progn
       (setq current-theme-phase 'light)
       (load-theme 'doom-one-light)
-      ;; (disable-theme 'doom-solarized-dark-high-contrast)
       )))
 
 ;; If you use `org' and don't want your org files in the default location below,
@@ -137,6 +135,8 @@
   )
 
 (use-package! gptel)
+
+(use-package! pomm)
 
 ;; ;; ocaml
 ;; (add-hook! 'tuareg-mode-hook #'merlin-mode)
