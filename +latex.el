@@ -4,7 +4,7 @@
 ;; (setq +latex-viewers '(skim))
 
 (defun my-LaTeX-mode ()
-  (add-to-list 'TeX-view-program-list '("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline %n %o"))
+  (add-to-list 'TeX-view-program-list '("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o %b"))
   (setq TeX-view-program-selection '((output-pdf "Skim")))
   )
 

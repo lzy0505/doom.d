@@ -24,7 +24,7 @@
 (package! opam-switch-mode :pin "1069e56a662f23ea09d4e05611bdedeb99257012")
 
 (package! lean4-mode
-  :recipe (:host github :repo "leanprover/lean4-mode" :files ("*.el" "data")))
+  :recipe (:host github :repo "leanprover-community/lean4-mode" :files ("*.el" "data")))
 
 (package! company-quickhelp)
 
